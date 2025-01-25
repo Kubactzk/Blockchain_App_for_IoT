@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Blockchain";
+}
+
+<h1>Data</h1>
+
+
+<!-- Button to generate data -->
+<form method="post" action="@Url.Action("GenerateData", "Block")">
+    <button type="submit" class="btn btn-primary">Generate Data</button>
+</form>
+
+<!-- Table displaying data -->
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>From</th>
+            <th>To</th>
+            <th>Humidity</th>
+            <th>Temperature</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.From</td>
+                <td>@item.To</td>
+                <td>@item.Humidity</td>
+                <td>@item.Temp</td>
+            </tr>
+        }
+    </tbody>
+</table>

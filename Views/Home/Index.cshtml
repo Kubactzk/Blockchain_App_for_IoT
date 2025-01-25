@@ -1,0 +1,137 @@
+﻿@model List<IoTBlockchain.Models.Block>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Blockchain</h1>
+    <p>Click on a block to view its data below.</p>
+</div>
+
+<!-- Blockchain Display Section -->
+<div class="container">
+    <div class="block-slider-container">
+        <button class="arrow-left" onclick="moveSlider('left')">&#8592;</button> <!-- Left Arrow -->
+
+        <div class="block-slider">
+            <div class="row">
+                @foreach (var block in Model)
+                {
+                    <div class="col-md-3 mb-4">
+                        <div class="block p-4" style="border: 2px solid #ddd; cursor: pointer; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); border-radius: 8px; background-color: #f9f9f9; margin-bottom: 15px;" onclick="showData(@block.Id, @block.Data)">
+                            <h5 class="font-weight-bold">Block</h5>
+                            <p><strong>Previous Hash:</strong> <span style="color: green; word-wrap: break-word;">@block.PreviousHash</span></p>
+                            <p><strong>Current Hash:</strong> <span style="color: red; word-wrap: break-word; white-space: normal;">@block.Hash</span></p>
+                            <p><strong>Timestamp:</strong> @block.Timestamp</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <button class="arrow-right" onclick="moveSlider('right')">&#8594;</button> <!-- Right Arrow -->
+    </div>
+</div>
+
+<!-- Data Display Section (Always Visible Below Blockchain) -->
+<div id="data-display" class="container" style="margin-top: 50px;">
+    <h3 class="text-center">Block Data</h3>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Humidity</th>
+                    <th>Temperature</th>
+                </tr>
+            </thead>
+            <tbody id="data-body">
+                <!-- Dynamic data -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        // Show data for the clicked block
+        function showData(blockId, blockData) {
+
+            const tableBody = document.getElementById("data-body");
+
+            // Clear any existing rows
+            tableBody.innerHTML = "";
+
+            blockData.forEach((entry) => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                        <td>${entry.From || "N/A"}</td>
+                        <td>${entry.To || "N/A"}</td>
+                        <td>${entry.Humidity || "N/A"}</td>
+                        <td>${entry.Temp || "N/A"}</td>
+                    `;
+                tableBody.appendChild(row);
+            });
+        }
+
+       
+
+        // Function to move the slider (left or right)
+        function moveSlider(direction) {
+            var slider = document.querySelector('.block-slider');
+            var currentScroll = slider.scrollLeft;
+            var step = 300; // Amount to move in each step
+
+            if (direction === 'left') {
+                slider.scrollLeft = currentScroll - step; // Move left
+            } else {
+                slider.scrollLeft = currentScroll + step; // Move right
+            }
+        }
+    </script>
+
+    <style>
+        .block-slider-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .block-slider {
+            display: flex;
+            overflow-x: auto;
+            padding: 10px 0;
+            scroll-behavior: smooth;
+            width: 90%; /* Adjust this to control the width of the scrollable area */
+        }
+
+        .arrow-left, .arrow-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.1);
+            border: none;
+            padding: 10px;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .arrow-left {
+            left: 10px;
+        }
+
+        .arrow-right {
+            right: 10px;
+        }
+
+        .arrow-left:hover, .arrow-right:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+    </style>
+}
