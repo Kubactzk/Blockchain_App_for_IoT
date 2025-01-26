@@ -3,14 +3,20 @@
 }
 
 <h1>Data</h1>
-
-
-<!-- Button to generate data -->
 <form method="post" action="@Url.Action("GenerateData", "Block")">
-    <button type="submit" class="btn btn-primary">Generate Data</button>
+    <div class="form-group d-flex align-items-center">
+        <input type="number"
+               name="difficulty"
+               class="form-control me-2"
+               placeholder="Difficulty Level"
+               min="1"
+               required
+               value="@ViewData["Difficulty"]" /> <!-- Set the value to stored difficulty -->
+        <button type="submit" class="btn btn-primary">Generate Data</button>
+    </div>
 </form>
 
-<!-- Table displaying data -->
+
 <table class="table mt-3">
     <thead>
         <tr>
@@ -25,10 +31,19 @@
         {
             <tr>
                 <td>@item.From</td>
-                <td>@item.To</td>
+                <td class="truncate">@item.To</td> 
                 <td>@item.Humidity</td>
                 <td>@item.Temp</td>
             </tr>
         }
     </tbody>
 </table>
+
+<style>
+    .truncate {
+        max-width: 150px; 
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>

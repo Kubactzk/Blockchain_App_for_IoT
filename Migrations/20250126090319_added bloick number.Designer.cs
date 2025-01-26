@@ -4,6 +4,7 @@ using IoTBlockchain.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IoTBlockchain.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250126090319_added bloick number")]
+    partial class addedbloicknumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,10 +40,6 @@ namespace IoTBlockchain.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DataSignature")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
 
@@ -50,9 +49,6 @@ namespace IoTBlockchain.Migrations
 
                     b.Property<bool>("IsValid")
                         .HasColumnType("bit");
-
-                    b.Property<int>("Nonce")
-                        .HasColumnType("int");
 
                     b.Property<string>("PreviousHash")
                         .IsRequired()
@@ -91,31 +87,6 @@ namespace IoTBlockchain.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Datas");
-                });
-
-            modelBuilder.Entity("KeyGeneratorModel", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("GateName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PrivateKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PublicKey")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Keys");
                 });
 #pragma warning restore 612, 618
         }

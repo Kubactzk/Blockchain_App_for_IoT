@@ -166,3 +166,4 @@ D:\Studia\ISA-magister\Magisterka\IoTBlockchain\obj\Debug\net8.0\refint\IoTBlock
 D:\Studia\ISA-magister\Magisterka\IoTBlockchain\obj\Debug\net8.0\IoTBlockchain.pdb
 D:\Studia\ISA-magister\Magisterka\IoTBlockchain\obj\Debug\net8.0\IoTBlockchain.genruntimeconfig.cache
 D:\Studia\ISA-magister\Magisterka\IoTBlockchain\obj\Debug\net8.0\ref\IoTBlockchain.dll
+D:\Studia\ISA-magister\Magisterka\IoTBlockchain\obj\Debug\net8.0\IoTBlockchain.sourcelink.json

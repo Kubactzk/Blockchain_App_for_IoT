@@ -1,12 +1,14 @@
-﻿@model List<IoTBlockchain.Models.Block>
-
-@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
+﻿<div class="text-center">
     <h1 class="display-4">Blockchain</h1>
     <p>Click on a block to view its data below.</p>
+    <form method="post" asp-action="CheckBlockchainValidity">
+        <button type="submit" class="btn btn-primary">Check blockchain for validity</button>
+    </form>
+    <br />
+    <form method="post" asp-action="VerifySignatures">
+        <button type="submit" class="btn btn-secondary">Verify Block Signatures</button>
+    </form>
+    <br />
 </div>
 
 <!-- Blockchain Display Section -->
@@ -19,11 +21,14 @@
                 @foreach (var block in Model)
                 {
                     <div class="col-md-3 mb-4">
-                        <div class="block p-4" style="border: 2px solid #ddd; cursor: pointer; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); border-radius: 8px; background-color: #f9f9f9; margin-bottom: 15px;" onclick="showData(@block.Id, @block.Data)">
-                            <h5 class="font-weight-bold">Block</h5>
+                        <div class="block p-4 @((block.IsValid) ? "valid" : "invalid")" style="border: 2px solid #ddd; cursor: pointer; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); border-radius: 8px; margin-bottom: 15px;" onclick="showData(@block.Id, @block.Data)">
+                            <h5 class="font-weight-bold">Block @block.BlockNumber</h5>
+                            <p><strong>Nonce:</strong> <span style="color: green; word-wrap: break-word;">@block.Nonce</span></p>
                             <p><strong>Previous Hash:</strong> <span style="color: green; word-wrap: break-word;">@block.PreviousHash</span></p>
                             <p><strong>Current Hash:</strong> <span style="color: red; word-wrap: break-word; white-space: normal;">@block.Hash</span></p>
+                            <p><strong>Signature:</strong> <span class="data-signature">@block.DataSignature</span></p> <!-- Added class for signature styling -->
                             <p><strong>Timestamp:</strong> @block.Timestamp</p>
+                            <p><strong>Valid:</strong> @block.IsValid</p>
                         </div>
                     </div>
                 }
@@ -58,7 +63,6 @@
     <script>
         // Show data for the clicked block
         function showData(blockId, blockData) {
-
             const tableBody = document.getElementById("data-body");
 
             // Clear any existing rows
@@ -68,27 +72,25 @@
                 const row = document.createElement("tr");
 
                 row.innerHTML = `
-                        <td>${entry.From || "N/A"}</td>
-                        <td>${entry.To || "N/A"}</td>
-                        <td>${entry.Humidity || "N/A"}</td>
-                        <td>${entry.Temp || "N/A"}</td>
-                    `;
+                                <td>${entry.From || "N/A"}</td>
+                                <td class="truncate">${entry.To || "N/A"}</td>
+                                <td>${entry.Humidity || "N/A"}</td>
+                                <td>${entry.Temp || "N/A"}</td>
+                            `;
                 tableBody.appendChild(row);
             });
         }
-
-       
 
         // Function to move the slider (left or right)
         function moveSlider(direction) {
             var slider = document.querySelector('.block-slider');
             var currentScroll = slider.scrollLeft;
-            var step = 300; // Amount to move in each step
+            var step = 300;
 
             if (direction === 'left') {
-                slider.scrollLeft = currentScroll - step; // Move left
+                slider.scrollLeft = currentScroll - step; 
             } else {
-                slider.scrollLeft = currentScroll + step; // Move right
+                slider.scrollLeft = currentScroll + step; 
             }
         }
     </script>
@@ -106,7 +108,7 @@
             overflow-x: auto;
             padding: 10px 0;
             scroll-behavior: smooth;
-            width: 90%; /* Adjust this to control the width of the scrollable area */
+            width: 90%; 
         }
 
         .arrow-left, .arrow-right {
@@ -132,6 +134,27 @@
 
         .arrow-left:hover, .arrow-right:hover {
             background-color: rgba(0, 0, 0, 0.3);
+        }
+
+        .block.valid {
+            background-color: lightgreen; 
+        }
+        .block.invalid {
+            background-color: lightcoral; 
+        }
+        .data-signature {
+            white-space: normal; 
+            word-wrap: break-word; 
+            overflow-wrap: break-word; 
+            display: block; 
+            word-break: break-all;
+        }
+
+        .truncate {
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     </style>
 }

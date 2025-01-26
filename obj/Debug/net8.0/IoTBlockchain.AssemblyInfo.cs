@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IoTBlockchain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+16a7c84c1fa0aa4c7a3a66b42f3c529512bd858f")]
 [assembly: System.Reflection.AssemblyProductAttribute("IoTBlockchain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IoTBlockchain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -11,5 +11,6 @@ namespace IoTBlockchain.Models
 
         public DbSet<Block> Blocks { get; set; }
         public DbSet<Data> Datas { get; set; }
+        public DbSet<KeyGeneratorModel> Keys { get; set; }
     }
 }
